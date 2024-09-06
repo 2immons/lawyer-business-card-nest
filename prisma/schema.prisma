@@ -20,9 +20,9 @@ model User {
 
   login    String  @unique
   hash     String
+  name     String
   email    String?
   role     String?
-  name     String?
   city     String?
   contacts String?
 

@@ -40,7 +40,7 @@ export class AuthService {
       );
 
     delete user.hash;
-    return this.signToken(user.id, user.login);
+    return this.signToken(user.id, user.login, user.name);
   }
 
   async signup(authDto: AuthDto) {
@@ -51,6 +51,7 @@ export class AuthService {
       const user = await this.db.user.create({
         data: {
           login: authDto.login,
+          name: authDto.name,
           hash: hash,
         },
       });
@@ -58,9 +59,9 @@ export class AuthService {
       delete user.hash;
 
       console.log(
-        'Создан пользователь: ' + user.login,
+        `Создан пользователь: ${user.login} с именем ${user.name}`
       );
-      return this.signToken(user.id, user.login);
+      return this.signToken(user.id, user.login, user.name);
     } catch (error) {
       if (
         error instanceof
@@ -79,7 +80,12 @@ export class AuthService {
   async signToken(
     userId: number,
     login: string,
-  ): Promise<{ access_token: string, expires_in: string }> {
+    name: string,
+  ): Promise<{
+    access_token: string;
+    expires_in: string;
+    display_name: string;
+  }> {
     const payload = {
       sub: userId,
       login,
@@ -99,7 +105,8 @@ export class AuthService {
 
     return {
       access_token: token,
-      expires_in: options.expiresIn
+      expires_in: options.expiresIn,
+      display_name: name
     };
   }
 }

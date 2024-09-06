@@ -2,7 +2,7 @@ import {
   Body,
   Controller,
   Get,
-  Post,
+  Post, Query,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthDto } from './dto';
@@ -17,7 +17,7 @@ export class AuthController {
   }
 
   @Get('login')
-  login(@Body() authDto: AuthDto) {
+  login(@Query() authDto: AuthDto) {
     return this.authService.login(authDto);
   }
 }

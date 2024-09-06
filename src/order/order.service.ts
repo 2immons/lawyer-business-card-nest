@@ -17,7 +17,7 @@ export class OrderService {
     clientCity?: string;
   }) {
     try {
-      console.log(data)
+      console.log(data);
       const order = await this.db.order.create({
         data: {
           clientId: data.userId,
@@ -26,7 +26,7 @@ export class OrderService {
           clientName: data.clientName,
           clientContacts: data.clientContacts,
           clientCity: data.clientCity,
-        }
+        },
       });
 
       return order;

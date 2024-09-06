@@ -16,7 +16,6 @@ export class OrderController {
     private orderService: OrderService,
   ) {}
 
-  @UseGuards(AuthGuard('jwt'))
   @Post('create-order')
   createOrder(@Body() createOrderDto: OrderDto) {
     return this.orderService.createOrder(
@@ -24,13 +23,11 @@ export class OrderController {
     );
   }
 
-  @UseGuards(AuthGuard('jwt'))
   @Get('all')
   getAllUsers() {
     return this.orderService.getAllOrders();
   }
 
-  @UseGuards(AuthGuard('jwt'))
   @Get('order/:id')
   getOrder(@Param('id') id: string) {
     const userId = parseInt(id, 10);
